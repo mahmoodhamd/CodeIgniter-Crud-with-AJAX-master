@@ -20,7 +20,7 @@
         <?php echo $this->session->flashdata('success_message'); ?>
     </div>
 <?php endif; ?>
-  <p>Don't have an account? <a href="<?php echo site_url('Auth/register'); ?>">Register</a></p>
+  <p>Don't have an account? <a href="<?php echo site_url('Auth/register_validation'); ?>">Register</a></p>
   
 	<!-- <center> <p>Developer's FB:<a href="https://web.facebook.com/shami17">Ehtesham Mehmood</a></p> -->
 </center>

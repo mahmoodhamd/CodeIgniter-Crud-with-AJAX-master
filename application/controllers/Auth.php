@@ -11,6 +11,7 @@ class Auth extends CI_Controller {
     }
     
     public function register_validation(){
+   
         $this->form_validation->set_rules('name', 'Username', 'required|is_unique[register_user.name]', array(
             'is_unique' => 'The %s is already taken.'
         ));
@@ -41,13 +42,9 @@ class Auth extends CI_Controller {
                 $this->load->view('login_view', $data);
              }
          }
+
     }
 
-    public function register() {
-       
-        $this->load->view('register_view');
-       
-    }
 
     public function login() {
         $this->form_validation->set_rules('email', 'Username or Email', 'required');
