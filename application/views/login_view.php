@@ -8,14 +8,14 @@
 <body>
     <h2>Login</h2>
     <!-- <//?php echo form_open('Auth/login'); ?> -->
-    <form action="<?php echo site_url('Auth/login'); ?>"></form>
+    <form action="<?php echo site_url('Auth/login'); ?>" method="POST">
         <label for="username_email">Username or Email:</label>
-        <input type="text" name="username_email" id="username_email" required>
+        <input type="text" name="email" id="email" required>
         <br>
         <label for="password">Password:</label>
         <input type="password" name="password" id="password" required>
         <br>
         <button type="submit">Login</button>
-    <?php echo form_close(); ?>
+</form>
 </body>
 </html>

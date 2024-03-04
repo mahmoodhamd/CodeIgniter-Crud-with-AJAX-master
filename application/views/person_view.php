@@ -22,41 +22,72 @@
 <?php endif; ?>
   <p>Don't have an account? <a href="<?php echo site_url('Auth/register_validation'); ?>">Register</a></p>
   
+  <p><a href="<?php echo site_url('Auth/login'); ?>">Login</a></p>
+  
+
 	<!-- <center> <p>Developer's FB:<a href="https://web.facebook.com/shami17">Ehtesham Mehmood</a></p> -->
-</center>
-    <h3>Person Data</h3>
-    <br />
-    <button class="btn btn-success" onclick="add_person()"><i class="glyphicon glyphicon-plus"></i> Add Person</button>
-    <br />
-    <br />
-    <table id="table" class="table table-striped table-bordered" cellspacing="0" width="100%">
-      <thead>
-        <tr>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Gender</th>
-          <th>Address</th>
-          <th>Date of Birth</th>
-          <th style="width:125px;">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-      </tbody>
+<!-- </center> -->
 
-      <tfoot>
-        <tr>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Gender</th>
-          <th>Address</th>
-          <th>Date of Birth</th>
-          <th>Action</th>
-        </tr>
-      </tfoot>
-    </table>
-	
-  </div>
+<div id="content">
+  <script>
+    // Function to check if the user is logged in
+    function isLoggedIn() {
+      // You can implement your own logic here to check if the user is logged in
+      // For demonstration purposes, let's assume a variable isLoggedIn is set somewhere in your code
+      var isLoggedIn = false; // Set to true if user is logged in, false otherwise
+      return isLoggedIn;
+    }
 
+    // Function to display content based on login status
+    function displayContent() {
+      var contentDiv = document.getElementById("content");
+      if (!isLoggedIn()) {
+        // If user is logged in, display the table structure
+        contentDiv.innerHTML = `
+        <h1>Welcome, <?php echo $email; ?>!</h1>
+        <h3>Person Data</h3>
+
+          <br />
+          <button class="btn btn-success" onclick="add_person()"><i class="glyphicon glyphicon-plus"></i> Add Person</button>
+          <br />
+          <br />
+          <table id="table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Gender</th>
+                <th>Address</th>
+                <th>Date of Birth</th>
+                <th style="width:125px;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Gender</th>
+                <th>Address</th>
+                <th>Date of Birth</th>
+                <th>Action</th>
+              </tr>
+            </tfoot>
+          </table>
+        `;
+      } else {
+        // If user is not logged in, display a message prompting them to log in
+        contentDiv.innerHTML = "<p>You need to log in to view the content.</p>";
+      }
+    }
+
+    // Call the function to initially display the content based on login status
+    displayContent();
+  </script>
+</div>
+
+  
   <script src="<?php echo base_url('assets/jquery/jquery-2.1.4.min.js')?>"></script>
   <script src="<?php echo base_url('assets/bootstrap/js/bootstrap.min.js')?>"></script>
   <script src="<?php echo base_url('assets/datatables/js/jquery.dataTables.min.js')?>"></script>

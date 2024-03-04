@@ -2,7 +2,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Auth extends CI_Controller {
-    
+ 
     public function __construct() {
         parent::__construct();
         $this->load->library('form_validation');
@@ -53,15 +53,26 @@ class Auth extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('login_view');
         } else {
+           
             $email = $this->input->post('email');
             $password = $this->input->post('password');
 
             $user = $this->Register_model->get_user($email);
-
+                 
             if ($user && password_verify($password, $user->password)) {
                 // Login successful, store user data in session
                 $this->session->set_userdata('user_id', $user->id);
-                redirect('person_view'); // Redirect to dashboard or any other page
+                // $name = $user->name;
+
+                // // Pass user's name and any other data you want to display to the view
+                // $data['name'] = $name;
+                $email = $user->email;
+                $data['email'] = $email;
+
+                $this->load->view('person_view',$data);
+                //$this->load->view('person_view');
+               // var_dump($data);
+            // redirect('person_view'); // Redirect to dashboard or any other page
             } else {
                 // Login failed, show error message
                 $data['error'] = 'Invalid username/email or password';
