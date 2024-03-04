@@ -17,5 +17,7 @@
         <br>
         <button type="submit">Login</button>
 </form>
+<p>Don't have an account? <a href="<?php echo site_url('Auth/register_validation'); ?>">Register</a></p>
+  
 </body>
 </html>

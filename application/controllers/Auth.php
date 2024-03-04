@@ -34,9 +34,10 @@ class Auth extends CI_Controller {
              if ($user_id) {
                  // Registration successful, log the user in
                 $this->session->set_userdata('user_id', $user_id);
-                $this->session->set_flashdata('success_message', 'Registration successful!');
-                 redirect('Person/index'); // Redirect to dashboard or any other page
-             } else {
+                $this->load->view('login_view',$data);
+             
+               
+                } else {
                  // Registration failed, show error message
                  $data['error'] = 'Failed to register user';
                 $this->load->view('login_view', $data);
@@ -62,15 +63,19 @@ class Auth extends CI_Controller {
             if ($user && password_verify($password, $user->password)) {
                 // Login successful, store user data in session
                 $this->session->set_userdata('user_id', $user->id);
-                // $name = $user->name;
+                 $name = $user->name;
 
                 // // Pass user's name and any other data you want to display to the view
-                // $data['name'] = $name;
-                $email = $user->email;
-                $data['email'] = $email;
+                $data = array(
+                    'name' => $name
+                );
+                
 
+               // $this->load->view('index',$data);
+               $this->session->set_flashdata('success_message', 'Registration successful!');
+             
                 $this->load->view('person_view',$data);
-                //$this->load->view('person_view');
+             
                // var_dump($data);
             // redirect('person_view'); // Redirect to dashboard or any other page
             } else {

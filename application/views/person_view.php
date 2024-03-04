@@ -20,9 +20,8 @@
         <?php echo $this->session->flashdata('success_message'); ?>
     </div>
 <?php endif; ?>
-  <p>Don't have an account? <a href="<?php echo site_url('Auth/register_validation'); ?>">Register</a></p>
   
-  <p><a href="<?php echo site_url('Auth/login'); ?>">Login</a></p>
+  <p><a href="<?php echo site_url($this->session->userdata('user_id') ? 'Auth/logout' : 'Auth/login'); ?>"><?php echo $this->session->userdata('user_id') ? 'Logout' : 'Login'; ?></a></p>
   
 
 	<!-- <center> <p>Developer's FB:<a href="https://web.facebook.com/shami17">Ehtesham Mehmood</a></p> -->
@@ -44,9 +43,9 @@
       if (!isLoggedIn()) {
         // If user is logged in, display the table structure
         contentDiv.innerHTML = `
-        <h1>Welcome, <?php echo $email; ?>!</h1>
+        
         <h3>Person Data</h3>
-
+        <h1>Welcome, <?php echo $name; ?>!</h1>
           <br />
           <button class="btn btn-success" onclick="add_person()"><i class="glyphicon glyphicon-plus"></i> Add Person</button>
           <br />
