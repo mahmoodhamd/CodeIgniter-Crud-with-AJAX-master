@@ -71,4 +71,29 @@ class Register_model extends CI_Model
         $this->db->where('id', $user_id);
         $this->db->update('register_user', array('remember_token' => NULL));
     }
-}
+
+
+
+        // Other methods of the model...
+    
+        public function get_remember_token_by_user_id($user_id) {
+            $this->db->where('id', $user_id);
+            $query = $this->db->get('register_user');
+    
+            if ($query->num_rows() > 0) {
+                $row = $query->row();
+                return $row->remember_token;
+            } else {
+                return null; // No remember token found for the user
+            }
+        }
+    
+        // Other methods of the model...
+    }
+    
+
+
+
+
+
+

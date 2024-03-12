@@ -6,8 +6,16 @@
     <title>Login</title>
 </head>
 <body>
+    <?php
+    // Check if the user is already logged in or has a valid remember me token
+    if ($this->session->userdata('user_id')) {
+     
+        // Redirect to the 'person_view' page if the user is already logged in
+        $this->load->view('person_view');
+    } else {
+        // Otherwise, display the login form
+    ?>
     <h2>Login</h2>
-    <!-- <//?php echo form_open('Auth/login'); ?> -->
     <form action="<?php echo site_url('Auth/login'); ?>" method="POST">
         <label for="username_email">Username or Email:</label>
         <input type="text" name="email" id="email" required>
@@ -18,8 +26,9 @@
         <input type="checkbox" name="remember_me" id="remember_me">
         <label for="remember_me">Remember Me</label>
         <button type="submit">Login</button>
-</form>
-<p>Don't have an account? <a href="<?php echo site_url('Auth/register_validation'); ?>">Register</a></p>
-  
+    </form>
+    <p>Don't have an account? <a href="<?php echo site_url('Auth/register_validation'); ?>">Register</a></p>
+    <?php } ?>
 </body>
 </html>
+

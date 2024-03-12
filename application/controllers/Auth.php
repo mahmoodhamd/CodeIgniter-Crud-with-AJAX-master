@@ -11,14 +11,39 @@ class Auth extends CI_Controller {
 
         $this->autologin();
 
-
-        // if ($this->session->userdata('user_id')) {
-        //     echo 'in construct session'.$this->session->userdata('user_id');
-        //     // If logged in, redirect to the main page
-        //     redirect('Person/index');
-        // }
     }
     
+
+    public function autologin() {
+        // Check if the remember token cookie exists
+        $remember_token = $this->input->cookie('remember_me');
+      //  echo 'rememebr token 20'.$remember_token;
+    // Check if the remember token is valid
+    if ($remember_token) {
+        // Retrieve the user based on the remember token
+        $user = $this->Register_model->get_user_by_remember_token($remember_token);
+       
+        if ($user) {
+            // Login successful, store user data in session
+            $this->session->set_userdata('user_id', $user->id);
+         //   echo 'user line 139'.$user->id;
+            $name = $user->name;
+            $data = array(
+                'name' => $name
+            );
+          //  echo 'name'.$name;
+            // Redirect the user to the main page
+           $this->load->view('person_view',$data);
+            return; // Exit the function
+
+
+        }
+    }
+    
+        
+    }
+    
+
     public function register_validation(){
    
         $this->form_validation->set_rules('name', 'Username', 'required|is_unique[register_user.name]', array(
@@ -75,7 +100,7 @@ class Auth extends CI_Controller {
             if ($user && password_verify($password, $user->password)) {
                 // Login successful, store user data in session
                 $this->session->set_userdata('user_id', $user->id);
-                echo 'line 76 '.$user->id;
+              //  echo 'line 76 '.$user->id;
                 // Pass user's name and any other data you want to display to the view
                 $name = $user->name;
                 $data = array(
@@ -88,10 +113,15 @@ class Auth extends CI_Controller {
     
                 // Remember the user if the 'Remember Me' checkbox is checked
                 if ($this->input->post('remember_me')) {
-                  //  echo 'rememebr line 87'.$this->input->post('remember_me');
+                   // echo 'rememebr line 87';
                     $this->remember();
 
                 }
+                else{
+                    $this->autologin();
+                   // echo 'autologin 97';
+                }
+             
     
                 // Redirect the user to the main page
                // $this->load->view('person_view');
@@ -104,38 +134,28 @@ class Auth extends CI_Controller {
     }
     
     public function remember() {
-        // Generate a random remember token
-      
-        $remember_token = $this->generate_random_token();
-       // echo 'line no 106'.$remember_token;
-        // Store the remember token in the database for the user
+        // Check if a remember token already exists for the user
         $user_id = $this->session->userdata('user_id');
-        $this->Register_model->store_remember_token($user_id, $remember_token);
-      //  echo 'line no 110'.$user_id;
-        // Set the remember token as a cookie
-        $this->input->set_cookie('remember_me', $remember_token, time() + (86400 * 10)); // 30 days expiry
-       
-    }
-
-
-
-    public function autologin() {
-        // Check if the remember token cookie exists
-        if ($this->input->cookie('remember_me')) {
-            $remember_token = $this->input->cookie('remember_me');
-            echo
-            // Retrieve the user based on the remember token
-            $user = $this->Register_model->get_user_by_remember_token($remember_token);
-             
-            if ($user) {
-                // Login successful, store user data in session
-                $this->session->set_userdata('user_id', $user->id);
+        $existing_token = $this->Register_model->get_remember_token_by_user_id($user_id);
     
-                // Redirect the user to the main page
-                $this->load->view('person_view');
-            }
+        //echo 'existing toke line 111'.$existing_token;
+        if (!$existing_token) {
+            // Generate a random remember token
+          //  echo 'line 114'.$existing_token;
+            $remember_token = $this->generate_random_token();
+            
+            // Store the remember token in the database for the user
+            $this->Register_model->store_remember_token($user_id, $remember_token);
+    
+            // Set the remember token as a cookie
+            $this->input->set_cookie('remember_me', $remember_token, time() + (86400 * 10)); // 30 days expiry
         }
     }
+    
+
+
+
+  
 
 
 
