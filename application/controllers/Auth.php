@@ -31,7 +31,7 @@ class Auth extends CI_Controller {
             $data = array(
                 'name' => $name
             );
-          //  echo 'name'.$name;
+           echo 'ssssssss autologin 34'.$name;
             // Redirect the user to the main page
            $this->load->view('person_view',$data);
             return; // Exit the function
@@ -117,10 +117,7 @@ class Auth extends CI_Controller {
                     $this->remember();
 
                 }
-                else{
-                    $this->autologin();
-                   // echo 'autologin 97';
-                }
+             
              
     
                 // Redirect the user to the main page
