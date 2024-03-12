@@ -6,14 +6,15 @@
     <title>Login</title>
 </head>
 <body>
-    <?php
-    // Check if the user is already logged in or has a valid remember me token
-    if ($this->session->userdata('user_id')) {
-        // No action needed when the user is already logged in
-    } else {
-        // Display the login form
+<?php
+
+    // Check if the user is not logged in or does not have a valid remember me token
+    if ($this->session->userdata('user_id') === null) {
+        
+       
         ?>
         <h2>Login</h2>
+       
         <form action="<?php echo site_url('Auth/login'); ?>" method="POST">
             <label for="username_email">Username or Email:</label>
             <input type="text" name="email" id="email" required>
@@ -26,7 +27,16 @@
             <button type="submit">Login</button>
         </form>
         <p>Don't have an account? <a href="<?php echo site_url('Auth/register_validation'); ?>">Register</a></p>
-    <?php } ?>
+        <?php
+    } else {
+        // Display the user ID (or perform any other action you want)
+        $this->session->userdata('user_id');
+    
+    }
+?>
+
+
+    
     
 </body>
 </html>
